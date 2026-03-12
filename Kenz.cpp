@@ -211,100 +211,90 @@ void DrawMenu() {
         float spacingChild = 8.0f;
 
         // Visual Tab
+                // --- TAB 0: MAIN (Visual / General) ---
         if (activeTab == 0) {
             float halfWidth = (windowWidth - spacingChild) / 2.0f;
 
+            // KOLOM KIRI: Ekonomi & Supir
             ImGui::BeginChild("left", ImVec2(halfWidth, 0), true);
             ImGui::PushItemWidth(-1); 
 			
-            // --- Fitur Ekonomi ---
-            ImGui::Checkbox("Unlimited Gold", &IsIntExample2); // Nama sudah diganti sayang 🩷
-            ImGui::Checkbox("Unlimited Balance", &IsBalanceMod);             
-            ImGui::Separator(); // Kasih garis pembatas biar rapi
-            // --- Fitur Trailer (Sudah Digabung di Sini) ---
-            ImGui::Checkbox("Remove Ads (AdFree)", &IsNoAds);
-            ImGui::Checkbox("Unlock All Trailers", &IsUnlockAllTrailer);
-            ImGui::Checkbox("Unlock All Driver Slots", &IsUnlockDrivers);
-            ImGui::Checkbox("No Trailer Damage", &IsNoTrailerDamage);
-
-            ImGui::Checkbox("Super Stability", &IsSuperStable);
-            //ImGui::Checkbox("Anti-Weight Cargo", &IsLightTrailer);
-            ImGui::Checkbox("Instant Connect", &IsInstantConnect); // Nah, ini dia sayang! 🩷
-            ImGui::Checkbox("Super Traction (Anti-Slip)", &IsSuperTraction);
-            ImGui::Checkbox("Remove All Ads", &IsNoAds);
-            ImGui::Checkbox("Super Job (Big Money & XP)", &IsSuperJob);
+            ImGui::TextColored(ImVec4(1, 1, 0, 1), "ECONOMY & LEVEL");
+            ImGui::Checkbox("Unlimited Gold", &IsIntExample2);
+            ImGui::Checkbox("Unlimited Balance", &IsBalanceMod);
             ImGui::Checkbox("Instant Max Level & XP", &IsMaxLevel);
-
+            ImGui::Checkbox("Remove All Ads", &IsNoAds);
+            
             ImGui::Separator();
             
-            // --- Fitur Bawaan Kamu ---
-			/*ImGui::Checkbox("Ultra Vision", &Dummytoggle2);
-			ImGui::Checkbox("Ghost Trail", &Dummytoggle3);
-			ImGui::Checkbox("Turbo Fill", &Dummytoggle4);
-			ImGui::Checkbox("Phase Shift", &Dummytoggle5);
-			ImGui::Checkbox("Stealth Mode", &Dummytoggle6);
-			ImGui::Checkbox("Magic Material", &Dummytoggle7);*/
-			
+            ImGui::TextColored(ImVec4(0, 1, 1, 1), "JOBS & DRIVERS");
+            ImGui::Checkbox("Super Job (Rich & XP)", &IsSuperJob);
+            ImGui::Checkbox("Instant Finish Job", &IsInstantFinish);
+            ImGui::Checkbox("Unlock Driver Slots", &IsUnlockDrivers);
+
             ImGui::PopItemWidth();
             ImGui::EndChild();
 
             ImGui::SameLine(0, spacingChild);
 
+            // KOLOM KANAN: Trailer & ESP
             ImGui::BeginChild("right", ImVec2(0, 0), true);
             ImGui::PushItemWidth(-1);
-            /*ImGui::Checkbox("World", &Dummytoggle8);
-            ImGui::Checkbox("Remap", &Dummytoggle9);
-            ImGui::Checkbox("Night", &Dummytoggle10);*/
-            ImGui::Separator();
-            ImGui::TextDisabled("Other");
+            
+            ImGui::TextColored(ImVec4(0, 1, 0, 1), "TRAILER MODS");
+            ImGui::Checkbox("Unlock All Trailers", &IsUnlockAllTrailer);
+            ImGui::Checkbox("No Trailer Damage", &IsNoTrailerDamage);
+            ImGui::Checkbox("Super Stability", &IsSuperStable);
+            ImGui::Checkbox("Instant Connect", &IsInstantConnect);
+            ImGui::Checkbox("Super Traction", &IsSuperTraction);
 
+            ImGui::Separator();
+            ImGui::TextDisabled("VISUAL / ESP");
             static bool esp_box = false;
             static bool esp_enabled = false;
             static float esp_width = 3.4f;
-
             ImGui::Checkbox("ESP (3D Box)", &esp_box);
-            ImGui::Checkbox("ESP", &esp_enabled);
+            ImGui::Checkbox("ESP Enabled", &esp_enabled);
             ImGui::SliderFloat("Width", &esp_width, 0.5f, 10.0f, "%.1f");
+            
             ImGui::PopItemWidth();
             ImGui::EndChild();
-            
-            // This hacks are just dummy......you can add youe own hacks here
         }
 
-        // Memory Tab
+        // --- TAB 1: MEMORY (Engine & Physics) ---
         if (activeTab == 1) {
             ImGui::BeginChild("memory_tab", ImVec2(0, 0), true);
             ImGui::PushItemWidth(-1);
-            ImGui::Text("Memory Features Here...");
-            ImGui::Checkbox("Instant Torque (Speed)", &IsInstantTorque);
-            ImGui::Separator();
-            ImGui::TextColored(ImVec4(1, 0.5f, 0, 1), "Engine Sound Settings");
-            ImGui::Checkbox("Custom RPM (Sound)", &IsCustomRPM);
-        if (IsCustomRPM) {
-           // Slider dari 0 sampai 8000 RPM
-            ImGui::SliderFloat("RPM Level", &CustomRPMValue, 0.0f, 8000.0f, "%.0f RPM");
-}
-            ImGui::Checkbox("Super Brake (Instant)", &IsSuperBrake);
             
+            ImGui::TextColored(ImVec4(1, 0, 1, 1), "MONSTER ENGINE");
+            ImGui::Checkbox("Instant Torque (Super Speed)", &IsInstantTorque);
+            ImGui::Checkbox("Super Brake (Instant Stop)", &IsSuperBrake);
             ImGui::Checkbox("No Fuel Consumption", &IsNoFuelConsum);
+            
+            ImGui::Separator();
+            
+            ImGui::TextColored(ImVec4(1, 0.5f, 0, 1), "ENGINE SOUND");
+            ImGui::Checkbox("Custom RPM (Screamer)", &IsCustomRPM);
+            if (IsCustomRPM) {
+                ImGui::SliderFloat("##RPMLevel", &CustomRPMValue, 800.0f, 8000.0f, "%.0f RPM");
+            }
 
             ImGui::PopItemWidth();
             ImGui::EndChild();
         }
 
-        // Settings Tab
+        // --- TAB 2: SETTINGS ---
         if (activeTab == 2) {
             ImGui::BeginChild("settings_tab", ImVec2(0, 0), true);
             ImGui::PushItemWidth(-1);
-            ImGui::Text("Settings Page...");
-            ImGui::Checkbox("Dark Mode", &Dummytoggle13);
-            ImGui::Checkbox("Show FPS", &Dummytoggle14);
-            ImGui::PopItemWidth();
+            ImGui::Text("Menu Settings");
+            ImGui::Checkbox("Show FPS Counter", &Dummytoggle14);
             ImGui::EndChild();
         }
 
         ImGui::End();
     }
+}
 }
 
 
@@ -377,248 +367,84 @@ void *hack_start(void *) {
 	
 	
 	
-// Bagian instalasi hook yang sudah diubah sesuai class Prefs
-Tools::Hook(
-    Il2CppGetMethodOffset(
-        OBFUSCATE("Assembly-CSharp.dll"), 
-        OBFUSCATE(""),               // Namespace dikosongkan (tadinya "User")
-        OBFUSCATE("Prefs"),          // Class diganti jadi "Prefs" (tadinya "Profile")
-        OBFUSCATE("get_Gold"),       // Method diganti jadi "get_Gold" (tadinya "get_HardCurrency")
-        0                            // Parameter tetap 0
-    ),
-    (void *) &IntExample2, 
-    (void **) &old_IntExample2
-);
+// ========================================================
+// [ 1. FITUR EKONOMI & PLAYER (Assembly-CSharp.dll) ]
+// ========================================================
 
-// Hook untuk Balance (Mata uang lain biasanya)
-Tools::Hook(
-    Il2CppGetMethodOffset(
-        OBFUSCATE("Assembly-CSharp.dll"), 
-        OBFUSCATE(""),           // Namespace kosong
-        OBFUSCATE("Prefs"),      // Class: Prefs
-        OBFUSCATE("get_Balance"),// Method: get_Balance
-        0                        // Parameter: 0
-    ),
-    (void *) &get_Balance_Hook, 
-    (void **) &old_Balance
-);
+// Fitur: Unlimited Gold (Cocok dengan IsIntExample2 di Hooks.h)
+Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("Assembly-CSharp.dll"), OBFUSCATE(""), OBFUSCATE("Prefs"), OBFUSCATE("get_Gold"), 0), (void *)&IntExample2, (void **)&old_IntExample2);
 
-// Hook untuk kestabilan trailer (SetStability)
-Tools::Hook(
-    Il2CppGetMethodOffset(
-        OBFUSCATE("Assembly-CSharp.dll"), 
-        OBFUSCATE(""),               // Namespace kosong
-        OBFUSCATE("TrailerController"), 
-        OBFUSCATE("SetStability"), 
-        0                            // 0 parameter
-    ),
-    (void *) &SetStability_Hook, 
-    (void **) &old_SetStability
-);
+// Fitur: Unlimited Balance (Cocok dengan IsBalanceMod di Hooks.h)
+Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("Assembly-CSharp.dll"), OBFUSCATE(""), OBFUSCATE("Prefs"), OBFUSCATE("get_Balance"), 0), (void *)&get_Balance_Hook, (void **)&old_Balance);
 
-// Hook untuk berat suspensi (SetSpringRate)
-/*Tools::Hook(
-    Il2CppGetMethodOffset(
-        OBFUSCATE("Assembly-CSharp.dll"), 
-        OBFUSCATE(""), 
-        OBFUSCATE("TrailerController"), 
-        OBFUSCATE("SetSpringRate"), 
-        1                            // 1 parameter (float weight)
-    ),
-    (void *) &SetSpringRate_Hook, 
-    (void **) &old_SetSpringRate
-);*/
+// Fitur: Instant Max Level (Cocok dengan IsMaxLevel di Hooks.h)
+Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("Assembly-CSharp.dll"), OBFUSCATE(""), OBFUSCATE("Prefs"), OBFUSCATE("get_Level"), 0), (void *)&GetLevel_Hook, (void **)&old_GetLevel);
 
-// Hook Update untuk Instant Connect
-Tools::Hook(
-    Il2CppGetMethodOffset(
-        OBFUSCATE("Assembly-CSharp.dll"), 
-        OBFUSCATE(""), 
-        OBFUSCATE("TrailerController"), 
-        OBFUSCATE("Update"), 
-        0
-    ), 
-    (void *)&TrailerUpdate, 
-    (void **)&old_TrailerUpdate
-);
+// Fitur: Instant Max XP (Cocok dengan IsMaxLevel di Hooks.h)
+Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("Assembly-CSharp.dll"), OBFUSCATE(""), OBFUSCATE("Prefs"), OBFUSCATE("get_Xp"), 0), (void *)&GetXP_Hook, (void **)&old_GetXP);
 
-// Hook Max Power
+// Fitur: Remove Ads Via Prefs (Cocok dengan IsNoAds di Hooks.h)
+Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("Assembly-CSharp.dll"), OBFUSCATE(""), OBFUSCATE("Prefs"), OBFUSCATE("get_AdFree"), 0), (void *)&AdFree_Hook, (void **)&old_AdFree);
+
+
+// ========================================================
+// [ 2. FITUR MESIN MONSTER & SPEED (VehiclePhysics.dll) ]
+// ========================================================
+
+// Fitur: Speed Monster & Torque (Cocok dengan IsInstantTorque di Hooks.h)
 Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("VehiclePhysics.dll"), OBFUSCATE("VehiclePhysics"), OBFUSCATE("Engine"), OBFUSCATE("GetMaxPowerTorque"), 1), (void *)&GetMaxPower_Hook, (void **)&old_GetMaxPower);
-
-// Hook Clamp (Penting banget biar gak ketahan!)
 Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("VehiclePhysics.dll"), OBFUSCATE("VehiclePhysics"), OBFUSCATE("Engine"), OBFUSCATE("ClampPowerTorque"), 2), (void *)&ClampTorque_Hook, (void **)&old_ClampTorque);
-
-// Hook Friction
 Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("VehiclePhysics.dll"), OBFUSCATE("VehiclePhysics"), OBFUSCATE("Engine"), OBFUSCATE("GetFrictionTorque"), 1), (void *)&Friction_Hook, (void **)&old_Friction);
+Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("VehiclePhysics.dll"), OBFUSCATE("VehiclePhysics"), OBFUSCATE("Engine"), OBFUSCATE("CalculateTorque"), 2), (void *)&CalculateTorque_Hook, (void **)&old_CalculateTorque);
 
 
-// Hook Specific Fuel
+
+// ========================================================
+// [ 3. FITUR BENSIN ABADI (VehiclePhysics.dll) ]
+// ========================================================
+
+// Fitur: No Fuel Consumption (Cocok dengan IsNoFuelConsum di Hooks.h)
 Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("VehiclePhysics.dll"), OBFUSCATE("VehiclePhysics"), OBFUSCATE("Engine"), OBFUSCATE("CalculateSpecificFuelConsumption"), 1), (void *)&SpecificFuel_Hook, (void **)&old_SpecificFuel);
-
-// Hook Instant Fuel
 Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("VehiclePhysics.dll"), OBFUSCATE("VehiclePhysics"), OBFUSCATE("Engine"), OBFUSCATE("CalculateInstantFuelConsumption"), 1), (void *)&InstantFuel_Hook, (void **)&old_InstantFuel);
-
-// Hook Max Fuel Rate
 Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("VehiclePhysics.dll"), OBFUSCATE("VehiclePhysics"), OBFUSCATE("Engine"), OBFUSCATE("GetMaxFuelRate"), 1), (void *)&MaxFuelRate_Hook, (void **)&old_MaxFuelRate);
 
 
-// Hook untuk Sensor RPM (0 parameter)
-Tools::Hook(
-    Il2CppGetMethodOffset(
-        OBFUSCATE("VehiclePhysics.dll"), 
-        OBFUSCATE("VehiclePhysics"), 
-        OBFUSCATE("Engine"), 
-        OBFUSCATE("get_sensorRpm"), 
-        0
-    ),
-    (void *) &get_sensorRpm_Hook, 
-    (void **) &old_get_sensorRpm
-);
+// ========================================================
+// [ 4. FITUR SENSOR & HANDLING (VehiclePhysics.dll) ]
+// ========================================================
 
-// Hook AddFrictionTorque (1 parameter: frictionTorque)
-Tools::Hook(
-    Il2CppGetMethodOffset(
-        OBFUSCATE("VehiclePhysics.dll"), 
-        OBFUSCATE("VehiclePhysics"), 
-        OBFUSCATE("Engine"), 
-        OBFUSCATE("AddFrictionTorque"), 
-        1                            // Karena ada (Single frictionTorque)
-    ),
-    (void *) &AddFrictionTorque_Hook, 
-    (void **) &old_AddFrictionTorque
-);
+// Fitur: Custom RPM Sound (Cocok dengan IsCustomRPM di Hooks.h)
+Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("VehiclePhysics.dll"), OBFUSCATE("VehiclePhysics"), OBFUSCATE("Engine"), OBFUSCATE("get_sensorRpm"), 0), (void *)&get_sensorRpm_Hook, (void **)&old_get_sensorRpm);
 
-Tools::Hook(
-    Il2CppGetMethodOffset(
-        OBFUSCATE("VehiclePhysics.dll"), 
-        OBFUSCATE("VehiclePhysics"), 
-        OBFUSCATE("Engine"), 
-        OBFUSCATE("get_sensorTcsEngaged"), 
-        0
-    ),
-    (void *) &get_Tcs_Hook, 
-    (void **) &old_get_Tcs
-);
-
-// Hook Status No Ads
-Tools::Hook(
-    Il2CppGetMethodOffset(
-        OBFUSCATE("Wanda.GameServices.dll"), 
-        OBFUSCATE("Wanda"), 
-        OBFUSCATE("ServiceManager"), 
-        OBFUSCATE("get_NoAds"), 
-        0
-    ),
-    (void *) &get_NoAds_Hook, 
-    (void **) &old_get_NoAds
-);
-
-// Hook Izin Banner Ad
-Tools::Hook(
-    Il2CppGetMethodOffset(
-        OBFUSCATE("Wanda.GameServices.dll"), 
-        OBFUSCATE("Wanda"), 
-        OBFUSCATE("ServiceManager"), 
-        OBFUSCATE("CanShowBannerAd"), 
-        0
-    ),
-    (void *) &CanShowAds_Hook, 
-    (void **) &old_CanShowAds
-);
-
-// --- Instalasi Hook Job ---
-
-// Hook pas Ambil Kerja (Bonus Gaji)
-Tools::Hook(
-    Il2CppGetMethodOffset(OBFUSCATE("Assembly-CSharp.dll"), OBFUSCATE(""), OBFUSCATE("JobManager"), OBFUSCATE("GetJob"), 1),
-    (void *) &GetJob_Hook, (void **) &old_GetJob
-);
-
-// Hook pas Selesai Kerja (Instant Rich & XP)
-Tools::Hook(
-    Il2CppGetMethodOffset(OBFUSCATE("Assembly-CSharp.dll"), OBFUSCATE(""), OBFUSCATE("JobComplete"), OBFUSCATE("Completed"), 1),
-    (void *) &JobCompleted_Hook, (void **) &old_JobCompleted
-);
-
-// Hook Level (Class: Prefs, Method: get_Level)
-Tools::Hook(
-    Il2CppGetMethodOffset(OBFUSCATE("Assembly-CSharp.dll"), OBFUSCATE(""), OBFUSCATE("Prefs"), OBFUSCATE("get_Level"), 0),
-    (void *) &GetLevel_Hook, (void **) &old_GetLevel
-);
-
-// Hook XP (Class: Prefs, Method: get_Xp)
-Tools::Hook(
-    Il2CppGetMethodOffset(OBFUSCATE("Assembly-CSharp.dll"), OBFUSCATE(""), OBFUSCATE("Prefs"), OBFUSCATE("get_Xp"), 0),
-    (void *) &GetXP_Hook, (void **) &old_GetXP
-);
-
-// Hook AdFree
-Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("Assembly-CSharp.dll"), OBFUSCATE(""), OBFUSCATE("Prefs"), OBFUSCATE("get_AdFree"), 0), (void *)&AdFree_Hook, (void **)&old_AdFree);
-
-// Hook Unlock Trailers
-Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("Assembly-CSharp.dll"), OBFUSCATE(""), OBFUSCATE("Prefs"), OBFUSCATE("get_UnlockTrailers"), 0), (void *)&UnlockTrailers_Hook, (void **)&old_UnlockTrailers);
-
-// Hook Trailer Damage
-Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("Assembly-CSharp.dll"), OBFUSCATE(""), OBFUSCATE("Prefs"), OBFUSCATE("get_TrailerDamage"), 0), (void *)&GetTrailerDamage_Hook, (void **)&old_GetTrailerDamage);
-
-// Hook SelectNewDriver (1 parameter: Int32 id)
-Tools::Hook(
-    Il2CppGetMethodOffset(OBFUSCATE("Assembly-CSharp.dll"), OBFUSCATE(""), OBFUSCATE("DriverManager"), OBFUSCATE("SelectNewDriver"), 1),
-    (void *) &SelectNewDriver_Hook, 
-    (void **) &old_SelectNewDriver
-);
-
-// Hook HireNewDriver (0 parameter)
-Tools::Hook(
-    Il2CppGetMethodOffset(OBFUSCATE("Assembly-CSharp.dll"), OBFUSCATE(""), OBFUSCATE("DriverManager"), OBFUSCATE("HireNewDriver"), 0),
-    (void *) &HireNewDriver_Hook, 
-    (void **) &old_HireNewDriver
-);
-
-	
-	// And here you can add your hooks
-	//Note for some games the Namespace is empty...so in this case you need to leave that blank like that
-	
-    pthread_exit(nullptr);
-    return nullptr;
-}
+// Fitur: Super Brake & Traction (Cocok dengan IsSuperBrake & IsSuperTraction di Hooks.h)
+Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("VehiclePhysics.dll"), OBFUSCATE("VehiclePhysics"), OBFUSCATE("Engine"), OBFUSCATE("AddFrictionTorque"), 1), (void *)&AddFrictionTorque_Hook, (void **)&old_AddFrictionTorque);
+Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("VehiclePhysics.dll"), OBFUSCATE("VehiclePhysics"), OBFUSCATE("Engine"), OBFUSCATE("get_sensorTcsEngaged"), 0), (void *)&get_Tcs_Hook, (void **)&old_get_Tcs);
 
 
-class ImGuiModMenu : public zygisk::ModuleBase {
-public:
-    void onLoad(Api *api, JNIEnv *env) override {
-        this->api = api;
-        this->env = env;
-    }
+// ========================================================
+// [ 5. FITUR IKLAN GLOBAL (Wanda.GameServices.dll) ]
+// ========================================================
 
-    void preAppSpecialize(AppSpecializeArgs *args) override {
-        auto package_name = env->GetStringUTFChars(args->nice_name, nullptr);
-        auto app_data_dir = env->GetStringUTFChars(args->app_data_dir, nullptr);
-        preSpecialize(package_name, app_data_dir);
-        env->ReleaseStringUTFChars(args->nice_name, package_name);
-        env->ReleaseStringUTFChars(args->app_data_dir, app_data_dir);
-    }
+// Fitur: Global No Ads (Cocok dengan IsNoAds di Hooks.h)
+Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("Wanda.GameServices.dll"), OBFUSCATE("Wanda"), OBFUSCATE("ServiceManager"), OBFUSCATE("get_NoAds"), 0), (void *)&get_NoAds_Hook, (void **)&old_get_NoAds);
+Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("Wanda.GameServices.dll"), OBFUSCATE("Wanda"), OBFUSCATE("ServiceManager"), OBFUSCATE("CanShowBannerAd"), 0), (void *)&CanShowAds_Hook, (void **)&old_CanShowAds);
 
-    void postAppSpecialize(const AppSpecializeArgs *) override {
-        if (enable_hack) {
-            std::thread hack_thread(hack_start, game_data_dir);
-            hack_thread.detach();
-        }
-    }
 
-private:
-    Api *api;
-    JNIEnv *env;
-    bool enable_hack;
-    char *game_data_dir;
+// ========================================================
+// [ 6. FITUR JOB & DRIVER (Assembly-CSharp.dll) ]
+// ========================================================
 
-    void preSpecialize(const char *package_name, const char *app_data_dir) {
-        if (strcmp(package_name, targetPackageName) == 0) {
-            enable_hack = true;
-            game_data_dir = new char[strlen(app_data_dir) + 1];
-            strcpy(game_data_dir, app_data_dir);
-        }
-    }
-};
+// Fitur: Super Job & Instant Finish (Cocok dengan IsSuperJob & IsInstantFinish di Hooks.h)
+Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("Assembly-CSharp.dll"), OBFUSCATE(""), OBFUSCATE("JobManager"), OBFUSCATE("GetJob"), 1), (void *)&GetJob_Hook, (void **)&old_GetJob);
+Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("Assembly-CSharp.dll"), OBFUSCATE(""), OBFUSCATE("JobComplete"), OBFUSCATE("Completed"), 1), (void *)&JobCompleted_Hook, (void **)&old_JobCompleted);
 
-REGISTER_ZYGISK_MODULE(ImGuiModMenu)
+// Fitur: Unlock Driver Slots (Cocok dengan IsUnlockDrivers di Hooks.h)
+Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("Assembly-CSharp.dll"), OBFUSCATE(""), OBFUSCATE("DriverManager"), OBFUSCATE("SelectNewDriver"), 1), (void *)&SelectNewDriver_Hook, (void **)&old_SelectNewDriver);
+Tools::Hook(Il2CppGetMethodOffset(OBFUSCATE("Assembly-CSharp.dll"), OBFUSCATE(""), OBFUSCATE("DriverManager"), OBFUSCATE("HireNewDriver"), 0), (void *)&HireNewDriver_Hook, (void **)&old_HireNewDriver);
+
+
+// ========================================================
+// [ 7. FITUR TRAILER & CARGO (Assembly-CSharp.dll) ]
+// ========================================================
+
+// Fi
